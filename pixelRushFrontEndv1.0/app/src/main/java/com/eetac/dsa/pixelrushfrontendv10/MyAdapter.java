@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.eetac.dsa.pixelrushfrontendv10.backEndClasses.StoreObject;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         this.storeObjects = storeObjects;
         this.context = context;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

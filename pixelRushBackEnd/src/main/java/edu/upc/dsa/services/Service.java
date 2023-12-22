@@ -2,23 +2,21 @@ package edu.upc.dsa.services;
 import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.manager.Manager;
 import edu.upc.dsa.manager.ManagerImpl;
+import edu.upc.dsa.models.Badge;
 import edu.upc.dsa.models.bodies.LoginCredentials;
 import edu.upc.dsa.models.Match;
 import edu.upc.dsa.models.StoreObject;
 import edu.upc.dsa.models.User;
 import edu.upc.dsa.models.bodies.RegisterCredentials;
 import io.swagger.annotations.*;
-import org.eclipse.persistence.internal.codegen.AccessLevel;
 
 
-import javax.json.Json;
-import javax.json.JsonObject;
+import javax.json.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Date;
 
 @Api(value = "/pixelRush", description = "Endpoint to Pixel Rush Service")
 @Path("/pixelRush")
@@ -316,5 +314,34 @@ public class Service {
         return Response.status(201).build();
     }
     //---------------------------------------------------------------------------------------------------------------
+    // Get ListBadge
+    @GET
+    @ApiOperation(value = "get badge", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = StoreObject.class),
+            @ApiResponse(code = 404, message = "budge does not exist")
+    })
+    @Path("/getObjectInformation/{objectID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBudge(@PathParam("username") String username) {
+        StoreObject object = this.m.getObject(username);
+        if(object!=null) return Response.status(200).entity(object).build();
+        else return Response.status(404).build();
+    }
+    @POST
+    @ApiOperation(value = "Register a new badge", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "User registered successfully")
+    })
+    @Path("/registerNewUser")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response registerNewbadge(Badge badge){
+        try {
+            this.m.registerB(badge.getUser(),badge.getName(), badge.getAvatar());
+            return Response.status(201).build();
+        }catch (UsernameDoesExist e){
+            return  Response.status(404).build();
+        }
+    }
 
 }

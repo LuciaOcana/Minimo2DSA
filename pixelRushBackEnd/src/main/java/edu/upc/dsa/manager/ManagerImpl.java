@@ -1,6 +1,7 @@
 package edu.upc.dsa.manager;
 
 import edu.upc.dsa.exceptions.*;
+import edu.upc.dsa.models.Badge;
 import edu.upc.dsa.models.User;
 import edu.upc.dsa.models.Match;
 import edu.upc.dsa.models.StoreObject;
@@ -16,7 +17,7 @@ public class ManagerImpl implements Manager{
     HashMap<String,User> users; //Key = username, seems like it inserts in alphabetical order based on username
     HashMap<String, StoreObject> storeObjects; //Key = objectID
     HashMap<String,Match> activeMatches; // Key = username
-
+    HashMap<String, Badge> badges;
 
     private static Manager instance;
     final static Logger logger = Logger.getLogger(ManagerImpl.class);
@@ -242,5 +243,26 @@ public class ManagerImpl implements Manager{
     }
 //---------------------------------------------------------------------------------------------------------------
 
+    @Override
+    public List<Badge> getUserBadge(String username)throws UsernameDoesNotExistException{
+        if(users.get(username)==null){
+            throw new UsernameDoesNotExistException("User does not exist");
+        }else{
+            logger.info("getUser("+username+")");
+            return users.get(username);
+        }
+    }
+
+    @Override
+    public void registerB(String username, String name, String avatar) throws UsernameDoesExist {
+        logger.info("Create user with ID= "+username);
+        if(!badges.containsKey(username)){
+            Badge newBadge = new Badge(username,name,avatar);
+            badges.put(username, newBadge); //add new user
+            logger.info("User successfully created");
+        }
+        else {logger.warn("this username already exists");
+            throw new UsernameDoesExist("This Username does exist");}
+    }
 
 }

@@ -37,6 +37,12 @@ public class MainUserPageActivity extends AppCompatActivity {
         intent.putExtra("username", message);
         startActivity(intent);
     }
+    public void goToBadge(View view){
+        Intent intent = new Intent(MainUserPageActivity.this, BadgeActivity.class);
+        String message = username;
+        intent.putExtra("username", message);
+        startActivity(intent);
+    }
 
     public void logout(View view){
         // Get the SharedPreferences instance

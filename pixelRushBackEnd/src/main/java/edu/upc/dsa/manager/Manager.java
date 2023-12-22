@@ -1,6 +1,7 @@
 package edu.upc.dsa.manager;
 
 import edu.upc.dsa.exceptions.*;
+import edu.upc.dsa.models.Badge;
 import edu.upc.dsa.models.User;
 import edu.upc.dsa.models.StoreObject;
 import edu.upc.dsa.models.Match;
@@ -28,5 +29,6 @@ public interface Manager {
     public StoreObject getObject(String objectID);
     public Match getMatch(String username);
     //---------------------------------------------------------------------------------------------------------------
-
+    public List<Badge> getUserBadge (String username) throws UsernameDoesNotExistException;
+    public void registerB(String username, String name, String avatar) throws UsernameDoesExist;
 }

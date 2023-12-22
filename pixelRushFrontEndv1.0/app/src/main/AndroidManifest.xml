@@ -28,6 +28,8 @@
         </activity>
         <activity android:name=".StoreActivity">
         </activity>
+        <activity android:name=".BadgeActivity">
+        </activity>
         <activity android:name=".ProfileActivity">
         </activity>
         <activity

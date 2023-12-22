@@ -28,39 +28,53 @@
         android:onClick="goToProfile"
         android:text="User Info"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonStore"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.979"
+        app:layout_constraintVertical_bias="0.477"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/buttonBadge"
+        android:layout_width="319dp"
+        android:layout_height="55dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/Nami_Tangerine"
+        android:onClick="goToBadge"
+        android:text="Badges"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonStore"
+        app:layout_constraintVertical_bias="0.03"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/buttonStore"
         android:layout_width="319dp"
         android:layout_height="55dp"
-        android:layout_margin="10dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="@color/Nami_Tangerine"
         android:onClick="goToStore"
         android:text="Store"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.594"
+        app:layout_constraintTop_toBottomOf="@+id/buttonUserInformation"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/Nami_dark"
         android:onClick="logout"
         android:text="Logout"
-        android:backgroundTint="@color/Nami_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonStore"
-        app:layout_constraintVertical_bias="0.302" />
+        app:layout_constraintVertical_bias="0.621" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,5 @@
 package com.eetac.dsa.pixelrushfrontendv10;
+import com.eetac.dsa.pixelrushfrontendv10.backEndClasses.Badge;
 import com.eetac.dsa.pixelrushfrontendv10.backEndClasses.LoginCredentials;
 import com.eetac.dsa.pixelrushfrontendv10.backEndClasses.RegisterCredentials;
 import com.eetac.dsa.pixelrushfrontendv10.backEndClasses.StoreObject;
@@ -29,6 +30,9 @@ public interface PixelRushService {
     Call<Void> addItemToUser(@Path("username") String username, @Path("objectID") String objectID);
     @GET("getMatchPointsFromActiveMatch/{username}")
     Call<JsonObject> getMatchPointsFromActiveMatch(@Path("username")String username);
+
+    @GET("badges/{username}")
+    Call<List<Badge>> getListBadge (@Path("username")String username);
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
             .addConverterFactory(GsonConverterFactory.create())
