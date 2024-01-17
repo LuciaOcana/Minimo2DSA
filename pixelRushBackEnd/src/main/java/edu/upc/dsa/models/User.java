@@ -1,9 +1,7 @@
 package edu.upc.dsa.models;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import org.apache.log4j.Logger;
 
 public class User {
     String username;
@@ -24,6 +22,8 @@ public class User {
     List<Match> matchesPlayed;
     //list of owned objects;
     List<StoreObject> ownedObjects;
+    //List of budges
+    List<Badge> badgeList;
     //empty constructor
     public User(){}
     // full constructor
@@ -39,6 +39,7 @@ public class User {
         this.birthDate = birthDate;
         this.matchesPlayed = new ArrayList<>();//create empty lists of matches
         this.ownedObjects = new ArrayList<>();//create empty list of owned objects
+        this.badgeList = new ArrayList<>();//create empty list of badges
         this.pointsEarned = 0;//User starts with 0 points earned
     }
     //all getters and setters from attributes of User class
@@ -152,6 +153,16 @@ public class User {
         }else{
             return -2;
         }
+    }
+    // Método para agregar un nuevo logro a la lista
+    public int addNewBadge(Badge badge) {
+        // Verificar si el logro ya está en la lista
+        if (badgeList.contains(badge)) {
+            return -1;  // Ya tiene el logro
+        }
+        // Agregar el logro a la lista
+        badgeList.add(badge);
+        return 1;  // Logro agregado exitosamente
     }
     public int getNumOfMatches(){
         if(matchesPlayed !=null){

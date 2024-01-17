@@ -314,7 +314,52 @@ public class Service {
         return Response.status(201).build();
     }
     //---------------------------------------------------------------------------------------------------------------
-    // Get ListBadge
+
+
+    // Obtener logros de un usuario
+    @GET
+    @ApiOperation(value = "Get user badges", notes = "Return list of badges")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Badge.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "Username does not exist or user is not in a Match")
+    })
+    @Path("/getUserBadges/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserBadges(@PathParam("username") String username) {
+        try {
+            List<Badge> userBadges = this.m.getUserBadge(username);
+            GenericEntity<List<Badge>> entity = new GenericEntity<List<Badge>>(userBadges) {};
+            return Response.status(200).entity(entity).build();
+        } catch (UsernameDoesNotExistException | UsernameisNotInMatchException e) {
+            return Response.status(404).build();
+        }
+    }
+
+    // Agregar logro a un usuario
+    @PUT
+    @ApiOperation(value = "Add badge to user", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Badge added successfully"),
+            @ApiResponse(code = 404, message = "Username does not exist or badge is null"),
+            @ApiResponse(code = 550, message = "Badge already owned")
+    })
+    @Path("/addBadgeToUser/{username}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response addBadgeToUser(@PathParam("username") String username, Badge badge) {
+        try {
+            this.m.addBadgeToUser(username, badge);
+            return Response.status(201).build();
+        } catch (UsernameDoesNotExistException | ObjectIDDoesNotExist | NotEnoughPoints e) {
+            return Response.status(404).build();
+        } catch (AlreadyOwned e) {
+            return Response.status(550).build();
+        }
+    }
+
+
+
+
+    /*// Get ListBadge
     @GET
     @ApiOperation(value = "get badge", notes = "")
     @ApiResponses(value = {
@@ -341,7 +386,6 @@ public class Service {
             return Response.status(201).build();
         }catch (UsernameDoesExist e){
             return  Response.status(404).build();
-        }
-    }
-
+        }*/
 }
+

@@ -8,7 +8,6 @@ import edu.upc.dsa.models.StoreObject;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +30,7 @@ public class ManagerImpl implements Manager{
         this.users = new HashMap<>();
         this.storeObjects = new HashMap<>();
         this.activeMatches = new HashMap<>();
+        this.badges = new HashMap<>();
     }
     public int size(){
         int ret = this.users.size();
@@ -243,15 +243,54 @@ public class ManagerImpl implements Manager{
     }
 //---------------------------------------------------------------------------------------------------------------
 
+
     @Override
-    public List<Badge> getUserBadge(String username)throws UsernameDoesNotExistException{
-        if(users.get(username)==null){
+    public List<Badge> getUserBadge(String username) throws UsernameDoesNotExistException, UsernameisNotInMatchException  {
+
+        logger.info("Show points from current match");
+        if (!this.users.containsKey(username)){
+            logger.warn("User does not exist");
             throw new UsernameDoesNotExistException("User does not exist");
-        }else{
-            logger.info("getUser("+username+")");
-            return users.get(username);
+        }else if(activeMatches.get(username)==null){
+            logger.warn(username+"is not in a match");
+            throw new UsernameisNotInMatchException("User is not in a match");
+        } else {
+//888888888888888888888888888888888
+            int points = activeMatches.get(username).getTotalPoints();
+            logger.info("Total current points: "+points);
+
+        }
+
+        if (users.get(username) == null) {
+            throw new UsernameDoesNotExistException("User does not exist");
+        } else {
+            logger.info("getUserBadge(" + username + ")");
+            return new ArrayList<>(badges.values());
         }
     }
+    @Override
+    public void addBadgeToUser(String username, Badge badge)throws UsernameDoesNotExistException, ObjectIDDoesNotExist,NotEnoughPoints, AlreadyOwned {
+        User user = users.get(username);
+        if(user == null){
+            logger.warn("User does not exist");
+            throw new UsernameDoesNotExistException("User does not exist");
+        }else if(badge==null){
+            logger.warn("ObjectID does not exist");
+            throw new ObjectIDDoesNotExist("ObjectID does not exist");
+        } else {
+            int response = user.addNewBadge(badge);
+            if(response==1){
+                logger.info("The item:"+badge.getName()+" was added into the User: "+username);
+            }else if(response == -1){
+                throw new AlreadyOwned("Already Owned");
+            }
+        }
+    }
+
+
+
+
+
 
     @Override
     public void registerB(String username, String name, String avatar) throws UsernameDoesExist {
@@ -264,5 +303,10 @@ public class ManagerImpl implements Manager{
         else {logger.warn("this username already exists");
             throw new UsernameDoesExist("This Username does exist");}
     }
+
+
+
+
+
 
 }

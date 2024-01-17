@@ -29,6 +29,10 @@ public interface Manager {
     public StoreObject getObject(String objectID);
     public Match getMatch(String username);
     //---------------------------------------------------------------------------------------------------------------
-    public List<Badge> getUserBadge (String username) throws UsernameDoesNotExistException;
+
+    public List<Badge> getUserBadge(String username) throws UsernameDoesNotExistException, UsernameisNotInMatchException;
+
+    public void addBadgeToUser(String username, Badge badge)throws UsernameDoesNotExistException, ObjectIDDoesNotExist,NotEnoughPoints, AlreadyOwned;
+
     public void registerB(String username, String name, String avatar) throws UsernameDoesExist;
 }
